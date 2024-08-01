@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzy.mall.dao.UmsAdminDao">
+    <select id="getResourceByAdminId" resultType="com.zzy.mall.model.UmsResource">
+        SELECT
+            ures.id id,
+            ures.create_time createTime,
+            ures.name name,
+            ures.url url,
+            ures.description description,
+            ures.category_id categoryId
+        FROM
+            ums_admin_role_relation uarr
+                LEFT JOIN ums_role ur ON uarr.role_id = ur.id
+                LEFT JOIN ums_role_resource_relation urrr ON urrr.role_id = ur.id
+                LEFT JOIN ums_resource ures ON urrr.resource_id = ures.id
+        where uarr.admin_id = #{adminId}
+    </select>
+    <select id="getRoleByAdminId" resultType="com.zzy.mall.model.UmsRole">
+        SELECT
+            ur.*
+        FROM
+            ums_admin_role_relation uarr
+                LEFT JOIN ums_role ur ON uarr.role_id = ur.id
+        WHERE uarr.admin_id = #{adminId}
+    </select>
+    <select id="getAdminListByRoleId" resultType="com.zzy.mall.model.UmsAdmin">
+        SELECT
+            ua.*
+        FROM
+            ums_admin ua
+                LEFT JOIN ums_admin_role_relation uarr on ua.id= uarr.admin_id
+        WHERE
+            uarr.role_id = #{roleId}
+    </select>
+    <select id="getAdminListByRoleIds" resultType="com.zzy.mall.model.UmsAdmin">
+        SELECT
+            ua.*
+        FROM
+            ums_admin ua
+                LEFT JOIN ums_admin_role_relation uarr on ua.id= uarr.admin_id
+        WHERE
+            uarr.role_id in
+            <foreach collection="roleIds" item="id" index="index" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </select>
+</mapper>

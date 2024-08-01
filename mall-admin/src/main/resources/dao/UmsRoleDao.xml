@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzy.mall.dao.UmsRoleDao">
+
+    <select id="getRoleByResourceId" resultType="com.zzy.mall.model.UmsRole">
+        SELECT
+            ur.*
+        FROM
+            ums_role ur
+                LEFT JOIN ums_role_resource_relation urrr ON ur.id = urrr.role_id
+        WHERE
+            urrr.resource_id = #{resourceId}
+    </select>
+</mapper>

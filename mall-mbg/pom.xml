@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zzy.mall</groupId>
+    <artifactId>mall-mbg</artifactId>
+    <version>1.0.0</version>
+
+    <name>mall-mbg</name>
+    <description>mall-mbg</description>
+
+    <parent>
+        <groupId>com.zzy.mall</groupId>
+        <artifactId>mall</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>com.zzy.mall</groupId>
+            <artifactId>mall-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>${mybatis-generator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
+
+
+
+</project>
