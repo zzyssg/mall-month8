@@ -1,6 +1,8 @@
 package com.zzy.mall.model;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 

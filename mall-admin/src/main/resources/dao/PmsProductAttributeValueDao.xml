@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzy.mall.dao.PmsProductAttributeValueDao">
+    <insert id="insertBatch">
+        insert into pms_product_attribute_value(product_id,product_attribute_id,value)
+        values
+        <foreach collection="list" index="index" item="item">
+            (#{item.productId},#{item.productAttributeId},#{item.value})
+        </foreach>
+    </insert>
+</mapper>

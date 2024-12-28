@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzy.mall.dao.PmsProductDao">
+    <!--编制ResultMapWithBlobs后面的内容，ResultMapWithBlobs内容已经被内部的映射过了-->
+    <resultMap id="updateInfoMap" type="com.zzy.mall.dto.PmsProductResult" extends="com.zzy.mall.mapper.PmsProductMapper.ResultMapWithBLOBs">
+        <result column="cate_parent_id" property="cateParentId" />
+        <association property="productLadderList" columnPrefix="ladder_" resultMap="com.zzy.mall.mapper.PmsProductLadderMapper.BaseResultMap">
+        </association>
+        <association property="productFullReductionList" columnPrefix="full_" resultMap="com.zzy.mall.mapper.PmsProductFullReductionMapper.BaseResultMap">
+        </association>
+        <association property="memberPriceList" columnPrefix="member_" resultMap="com.zzy.mall.mapper.PmsMemberPriceMapper.BaseResultMap">
+        </association>
+        <association property="skuStockList" columnPrefix="stock" resultMap="com.zzy.mall.mapper.PmsSkuStockMapper.BaseResultMap"/>
+        <association property="productAttributeValueList" columnPrefix="attr_val_" resultMap="com.zzy.mall.mapper.PmsProductAttributeValueMapper.BaseResultMap">
+        </association>
+    </resultMap>
+
+    <select id="getUpdateInfo" resultMap="updateInfoMap">
+/*      product 表  ladder full_reduction member_price sku_stock attribute 表,
+        联查出 productResult(多了分类的parentId) extend ProductParam extends PmsProduct*/
+        select
+            *,
+            ppc.parent_id cateParentId,
+            ppl.id ladder_id,ppl.product_id ladder_product_id,ppl.count ladder_count,ppl.discount ladder_discount,ppl.price ladder_price,
+            ppfr.id full_id,ppfr.product_id full_product_id,ppfr.full_price full_full_price,ppfr.reduce_price full_reduce_price,
+            pmp.id member_id,pmp.product_id member_product_id,pmp.member_level_id member_member_level_id,
+                pmp.member_price member_member_price,pmp.member_level_name member_member_level_name,
+            pss.id stock_id,pss.product_id stock_product_id,pss.sku_code stock_sku_code,pss.price stock_price,pss.stock stock_stock,pss.low_stock stock_low_stock,
+                pss.pic stock_pic,pss.sale stock_sale,pss.promotion_price stock_promotion_price,pss.lock_stock stock_lock_stock,
+                pss.sp_data stock_sp_data,
+            ppav.id attr_val_id,ppav.product_id attr_val_product_id,ppav.product_attribute_id attr_val_product_attribute_id,ppav.value attr_val_value
+        from pms_product pp
+        left join pms_product_category ppc on pp.product_category_id = ppc.id
+        left join pms_product_ladder ppl on pp.id = ppl.product_id
+        left join pms_product_full_reduction ppfr on pp.id = ppfr.product_id
+        left join pms_member_price pmp on pp.id = pmp.product_id
+        left join pms_sku_stock pss on pp.id = pss.product_id
+        left join pms_product_attribute_value ppav on pp.id = ppav.product_id
+        where pp.id = #{id}
+    </select>
+</mapper>
