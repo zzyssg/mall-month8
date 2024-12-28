@@ -36,7 +36,7 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
         int count = productCategoryMapper.insert(pmsProductCategory);
         //3、用于插入中间表参数
         insertRelation(pmsProductCategory,productCategoryParam.getProductAttributeList());
-
+        PmsProductCategoryServiceImpl
         return count;
     }
 }
