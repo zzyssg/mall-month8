@@ -1,6 +1,7 @@
 package com.zzy.mall.service;
 
 import com.zzy.mall.dto.PmsProductCategoryParam;
+import com.zzy.mall.model.PmsProductCategory;
 
 /**
  * @program: mall
@@ -12,4 +13,8 @@ public interface PmsProductCategoryService {
 
 
     int create(PmsProductCategoryParam productCategoryParam);
+
+    PmsProductCategory getItem(Long id);
+
+    int delete(Long id);
 }

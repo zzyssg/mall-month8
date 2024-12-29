@@ -2,6 +2,7 @@ package com.zzy.mall.controller;
 
 import com.zzy.mall.common.api.CommonResult;
 import com.zzy.mall.dto.PmsProductCategoryParam;
+import com.zzy.mall.model.PmsProductCategory;
 import com.zzy.mall.service.PmsProductCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +20,7 @@ import java.util.List;
  * @create: 2024-12-22
  */
 @RestController
-@Api(value = "PmsProductCategoryController")
+@Api(tags = "PmsProductCategoryController")
 @Tag(name = "PmsProductCategoryController",description = "商品分类管理")
 @RequestMapping("/productCategory")
 public class PmsProductCategoryController {
@@ -41,14 +42,20 @@ public class PmsProductCategoryController {
     @ApiOperation("根据ID获取商品分类")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public CommonResult getItem(@PathVariable Long id){
-        return null;
+        PmsProductCategory productCategory =  productCategoryService.getItem(id);
+        return CommonResult.success(productCategory);
     }
 
 
     @ApiOperation("删除商品分类")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public CommonResult delete(@PathVariable Long id){
-        return null;
+        int count = productCategoryService.delete(id);
+        if (count > 0) {
+            return CommonResult.success();
+        }else {
+            return CommonResult.failed("删除商品分类失败!");
+        }
     }
 
     @ApiOperation("分页查询商品分类")
